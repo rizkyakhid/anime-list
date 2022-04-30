@@ -1,14 +1,13 @@
 import React from "react";
-import { Box, Font } from "../../components";
-import { LinkWrapper } from "./styles";
+import { Anchor, Box, Font } from "../../components";
 
 const Detail = () => {
   return (
     <Box>
       <Font size="sm">INI HALAMAN DETAIL YGY</Font>
-      <LinkWrapper to={"/"}>
+      <Anchor link={"/"}>
         <Font size="sm">HELLO</Font>
-      </LinkWrapper>
+      </Anchor>
     </Box>
   );
 };
