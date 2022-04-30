@@ -7,6 +7,7 @@ import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-serv
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
+import HtmlMinimizerPlugin from "html-minimizer-webpack-plugin";
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -58,6 +59,10 @@ const config: Configuration = {
     port: 4000,
     open: true,
     hot: true,
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new HtmlMinimizerPlugin()],
   },
 };
 

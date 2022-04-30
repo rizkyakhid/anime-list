@@ -1,10 +1,11 @@
 import React from "react";
+import { Box } from "../styles";
 
 const Collections = () => {
   return (
-    <div>
+    <Box>
       <div>INI HALAMAN Collections YGY</div>
-    </div>
+    </Box>
   );
 };
 
