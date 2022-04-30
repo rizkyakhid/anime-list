@@ -20,8 +20,8 @@ const Font = ({
     font-weight: ${weight === "regular"
       ? 500
       : weight === "semi-bold"
-      ? "600"
-      : "700"};
+      ? 600
+      : 700};
     color: ${color};
   `;
   return <Wrapper>{children}</Wrapper>;

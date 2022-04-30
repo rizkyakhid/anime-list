@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box } from "../styles";
+import { Box } from "../../components";
 
 const Home = () => {
   return (

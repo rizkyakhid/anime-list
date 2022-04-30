@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "../styles";
+import { Box } from "../../components";
 
 const Collections = () => {
   return (

@@ -1,6 +1,5 @@
 import React from "react";
-import Font from "../../components/Font/Font";
-import { Box } from "../styles";
+import { Box, Font } from "../../components";
 import { LinkWrapper } from "./styles";
 
 const Detail = () => {
