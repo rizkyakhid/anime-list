@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 interface ICardProps {
   children?: React.ReactNode | string;
   to?: string;
+  onClick?: () => void;
 }
 
-const Card = ({ children, to }: ICardProps) => {
+const Card = ({ children, to, onClick }: ICardProps) => {
   const CardWrapperLink = styled(Link)`
     background: #ffffff;
     border: 1px solid #f2f2f2;
@@ -25,10 +26,17 @@ const Card = ({ children, to }: ICardProps) => {
     border-radius: 8px;
     padding: 12px;
   `;
+  const handleClick = () => {
+    onClick && onClick();
+  };
   if (to && to?.length !== 0) {
-    return <CardWrapperLink to={to}>{children}</CardWrapperLink>;
+    return (
+      <CardWrapperLink onClick={handleClick} to={to}>
+        {children}
+      </CardWrapperLink>
+    );
   } else {
-    return <CardWrapperDiv>{children}</CardWrapperDiv>;
+    return <CardWrapperDiv onClick={handleClick}>{children}</CardWrapperDiv>;
   }
 };
 

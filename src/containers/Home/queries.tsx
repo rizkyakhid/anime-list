@@ -19,6 +19,7 @@ query ($id: Int, $page: Int, $perPage: Int) {
       }
       seasonYear
       episodes
+      meanScore
     }
   }
 }

@@ -35,4 +35,6 @@ export const AddToCollectionLogo = styled.div`
   border-radius: 8px;
   font-weight: 500;
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;

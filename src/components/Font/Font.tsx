@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 
 interface IFontProps {
-  children?: string;
+  children?: React.ReactNode;
   size?: "xs" | "sm" | "md" | "lg";
   weight?: "regular" | "semi-bold" | "bold";
   color?: string;

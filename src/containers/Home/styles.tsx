@@ -22,3 +22,19 @@ export const PaginationWrapper = styled.div`
   align-items: center;
   justify-content: end;
 `;
+
+export const Pagination = styled.div`
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 12px;
+  cursor: pointer;
+`;
+
+export const PaginationDisabled = styled.div`
+  border: 1px solid #828282;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 12px;
+  cursor: default;
+`;
