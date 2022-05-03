@@ -1,11 +1,14 @@
 import React from "react";
-import { Box } from "../../components";
+import { Box, Header } from "../../components";
 
 const Collections = () => {
   return (
-    <Box>
-      <div>INI HALAMAN Collections YGY</div>
-    </Box>
+    <>
+      <Header>Ani-Collections</Header>
+      <Box>
+        <div>INI HALAMAN Collections YGY</div>
+      </Box>
+    </>
   );
 };
 
