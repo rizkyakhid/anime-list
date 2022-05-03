@@ -1,13 +1,13 @@
 import React from "react";
-import { Anchor, Box, Header } from "../../components";
+import { Box, Header } from "../../components";
+import HomeContainer from "../../containers/Home/Home";
 
 const Home = () => {
   return (
     <>
       <Header>Ani-List</Header>
-      <Box>
-        <div>INI HOME YGY</div>
-        <Anchor link="/detail">Detail</Anchor>
+      <Box header>
+        <HomeContainer />
       </Box>
     </>
   );

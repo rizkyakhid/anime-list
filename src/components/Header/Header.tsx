@@ -8,8 +8,10 @@ interface IHeaderProps {
 
 const Header = ({ children = "", backButton = false }: IHeaderProps) => {
   const HeaderWrapper = styled.div`
+    position: fixed;
+    width: 100%;
+    padding: 16px 0;
     background-color: #ff6388;
-    padding: 16px;
     color: white;
     font-weight: 600;
     display: flex;

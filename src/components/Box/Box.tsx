@@ -3,13 +3,14 @@ import React from "react";
 
 interface IBoxProps {
   children: React.ReactNode;
+  header?: boolean;
 }
 
-const Box = ({ children }: IBoxProps) => {
+const Box = ({ children, header }: IBoxProps) => {
   const BoxWrapper = styled.div`
     font-size: 16px;
     background-color: white;
-    padding: 16px;
+    padding: ${header ? "66px 16px 16px" : "16px"};
   `;
   return <BoxWrapper>{children}</BoxWrapper>;
 };
