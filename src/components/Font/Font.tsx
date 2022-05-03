@@ -6,6 +6,7 @@ interface IFontProps {
   size?: "xs" | "sm" | "md" | "lg";
   weight?: "regular" | "semi-bold" | "bold";
   color?: string;
+  align?: "center" | "left" | "right" | "justify";
 }
 
 const Font = ({
@@ -13,6 +14,7 @@ const Font = ({
   size = "sm",
   weight = "regular",
   color = "#333",
+  align = "left",
 }: IFontProps) => {
   const Wrapper = styled.div`
     font-family: "Gill Sans", sans-serif;
@@ -29,6 +31,7 @@ const Font = ({
       ? 600
       : 700};
     color: ${color};
+    text-align: ${align};
   `;
   return <Wrapper>{children}</Wrapper>;
 };

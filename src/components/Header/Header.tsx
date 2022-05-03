@@ -18,18 +18,34 @@ const Header = ({ children = "", backButton = false }: IHeaderProps) => {
     justify-content: ${backButton ? "start" : "center"};
     gap: 12px;
   `;
+  const HeaderContentWrapper = styled.div`
+    width: 100%;
+    padding: 0 16px;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    justify-content: ${backButton ? "start" : "center"};
+    gap: 12px;
+  `;
+  const BackButtonWrapper = styled.div`
+    cursor: ${backButton ? "pointer" : "default"};
+  `;
   const handleBack = (e: React.MouseEvent<HTMLElement>) => {
     e?.preventDefault();
     window?.history?.back();
   };
   return (
     <HeaderWrapper>
-      {backButton && (
-        <div onClick={(e: React.MouseEvent<HTMLElement>) => handleBack(e)}>
-          {"<"}
-        </div>
-      )}
-      <div>{children}</div>
+      <HeaderContentWrapper>
+        {backButton && (
+          <BackButtonWrapper
+            onClick={(e: React.MouseEvent<HTMLElement>) => handleBack(e)}
+          >
+            {"<"}
+          </BackButtonWrapper>
+        )}
+        <div>{children}</div>
+      </HeaderContentWrapper>
     </HeaderWrapper>
   );
 };

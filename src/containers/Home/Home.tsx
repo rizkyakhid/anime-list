@@ -2,7 +2,12 @@ import { useQuery } from "@apollo/client";
 import React from "react";
 import { Card, Font } from "../../components";
 import { queryGetAllAnime } from "./queries";
-import { CardWrapper, Container, InfoWrapper } from "./styles";
+import {
+  CardWrapper,
+  Container,
+  InfoWrapper,
+  PaginationWrapper,
+} from "./styles";
 
 const HomeContainer = () => {
   const [pagination, setPagination] = React.useState({
@@ -20,9 +25,9 @@ const HomeContainer = () => {
 
   return (
     <Container onClick={handlePagination}>
+      <Font weight="semi-bold">Anime List</Font>
       {!loading && (
         <React.Fragment>
-          <Font weight="semi-bold">Anime List</Font>
           {data?.Page?.media?.map((anime: any, id: number) => (
             <Card key={id} to={`/detail?id=${anime?.id}`}>
               <CardWrapper>
@@ -37,6 +42,13 @@ const HomeContainer = () => {
               </CardWrapper>
             </Card>
           ))}
+          <PaginationWrapper>
+            <div>Prev</div>
+            <div>1</div>
+            <div>2</div>
+            <div>...</div>
+            <div>Next</div>
+          </PaginationWrapper>
         </React.Fragment>
       )}
     </Container>

@@ -1,19 +1,17 @@
 import React from "react";
-// import { useLocation } from "react-router-dom";
-import { Anchor, Box, Font, Header } from "../../components";
+import { useLocation } from "react-router-dom";
+import { Box, Header } from "../../components";
+import DetailContainer from "../../containers/Detail/Detail";
 
 const Detail = () => {
-  // const { search } = useLocation();
-  // const id = +search?.slice(4, search?.length);
+  const { search } = useLocation();
+  const id = +search?.slice(4, search?.length);
 
   return (
     <>
       <Header backButton>Ani-Detail</Header>
-      <Box>
-        <Font size="sm">INI HALAMAN DETAIL YGY</Font>
-        <Anchor link={"/"}>
-          <Font size="sm">HELLO</Font>
-        </Anchor>
+      <Box header>
+        <DetailContainer id={id} />
       </Box>
     </>
   );
