@@ -59,16 +59,6 @@ const HomeContainer = () => {
     navigate("/collections");
   };
 
-  if (!localStorage?.collections) {
-    localStorage?.setItem(
-      "collections",
-      JSON.stringify([
-        { id: 1, name: "favorites", list: [] },
-        { id: 2, name: "to be watched", list: [] },
-      ])
-    );
-  }
-
   return (
     <Container>
       <SimpleTabWrapper>

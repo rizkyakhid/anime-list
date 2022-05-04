@@ -58,16 +58,6 @@ const CollectionsContainer = () => {
   //   console.log(id);
   // };
 
-  if (!localStorage?.collections) {
-    localStorage?.setItem(
-      "collections",
-      JSON.stringify([
-        { id: 1, name: "favorites", list: [] },
-        { id: 2, name: "to be watched", list: [] },
-      ])
-    );
-  }
-
   const handleOutsideConfirmation = () => {
     setOtherState({ ...otherState, confirmationDelete: false });
   };
@@ -84,13 +74,17 @@ const CollectionsContainer = () => {
     const newCollection = [
       ...collections,
       {
-        id: collections[collections?.length - 1]?.id + 1,
+        id:
+          collections?.length !== 0
+            ? collections[collections?.length - 1]?.id + 1
+            : 1,
         name: inputVal?.collectionName,
         list: [],
       },
     ];
     localStorage?.setItem("collections", JSON.stringify(newCollection));
     setOtherState({ ...otherState, modalNewCollection: false });
+    setInputVal({ ...inputVal, collectionName: "" });
     setCollections(newCollection);
   };
 
