@@ -6,6 +6,7 @@ import {
   ButtonWrapper,
   Container,
   Image,
+  InputCollection,
   ModalWrapper,
   NameWrapper,
   SimpleTabWrapper,
@@ -22,7 +23,11 @@ const CollectionsContainer = () => {
   );
   const [otherState, setOtherState] = useState({
     confirmationDelete: false,
+    modalNewCollection: false,
     selectedId: 0,
+  });
+  const [inputVal, setInputVal] = useState({
+    collectionName: "",
   });
 
   const handleClickAnimeList = () => {
@@ -48,10 +53,10 @@ const CollectionsContainer = () => {
     setOtherState({ ...otherState, confirmationDelete: false });
   };
 
-  const handleEdit = (e: any, id: number) => {
-    e.preventDefault();
-    console.log(id);
-  };
+  // const handleEdit = (e: any, id: number) => {
+  //   e.preventDefault();
+  //   console.log(id);
+  // };
 
   if (!localStorage?.collections) {
     localStorage?.setItem(
@@ -67,13 +72,41 @@ const CollectionsContainer = () => {
     setOtherState({ ...otherState, confirmationDelete: false });
   };
 
+  const handleOutsideAddCollection = () => {
+    setOtherState({ ...otherState, modalNewCollection: false });
+  };
+
+  const handleChangeAddCollection = (e: any) => {
+    setInputVal({ ...inputVal, collectionName: e?.target?.value });
+  };
+
+  const handleAddNewCollection = () => {
+    const newCollection = [
+      ...collections,
+      {
+        id: collections[collections?.length - 1]?.id + 1,
+        name: inputVal?.collectionName,
+        list: [],
+      },
+    ];
+    localStorage?.setItem("collections", JSON.stringify(newCollection));
+    setOtherState({ ...otherState, modalNewCollection: false });
+    setCollections(newCollection);
+  };
+
   return (
     <Container>
       <SimpleTabWrapper>
         <TabInactive onClick={handleClickAnimeList}>Anime List</TabInactive>
         <TabActive>All collections</TabActive>
       </SimpleTabWrapper>
-      <Button>Add Collection</Button>
+      <Button
+        onClick={() =>
+          setOtherState({ ...otherState, modalNewCollection: true })
+        }
+      >
+        Add Collection
+      </Button>
       {collections?.length !== 0 ? (
         collections?.map((item: any, id: number) => (
           <React.Fragment key={id}>
@@ -91,9 +124,9 @@ const CollectionsContainer = () => {
                     <Font weight="semi-bold">{item?.name?.toUpperCase()}</Font>
                   </div>
                   <ActionsWrapper>
-                    <div onClick={(e: any) => handleEdit(e, item?.id)}>
+                    {/* <div onClick={(e: any) => handleEdit(e, item?.id)}>
                       edit
-                    </div>
+                    </div> */}
                     <div onClick={(e: any) => handleDelete(e, item?.id)}>
                       del
                     </div>
@@ -104,7 +137,10 @@ const CollectionsContainer = () => {
           </React.Fragment>
         ))
       ) : (
-        <div>BELUM ADA KOLEKSI</div>
+        <div>
+          Currently, there is no collection. Please be kindly to add some using
+          the button above!
+        </div>
       )}
       <Modal
         state={otherState?.confirmationDelete}
@@ -127,6 +163,30 @@ const CollectionsContainer = () => {
                 onClick={() => handleSubmit(otherState?.selectedId)}
               >
                 YES
+              </Button>
+            </ButtonWrapper>
+          </React.Fragment>
+        </ModalWrapper>
+      </Modal>
+      <Modal
+        state={otherState?.modalNewCollection}
+        onClickOutside={handleOutsideAddCollection}
+      >
+        <ModalWrapper>
+          <React.Fragment>
+            <Font weight="bold">New Collection</Font>
+            <Font size="xs" weight="semi-bold">
+              Collection Name
+            </Font>
+            <InputCollection
+              type="text"
+              value={inputVal?.collectionName}
+              onChange={(e: any) => handleChangeAddCollection(e)}
+              autoFocus
+            />
+            <ButtonWrapper>
+              <Button width={"100%"} onClick={handleAddNewCollection}>
+                ADD COLLECTION
               </Button>
             </ButtonWrapper>
           </React.Fragment>
