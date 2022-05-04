@@ -1,9 +1,9 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { Font } from "../../components";
+import { useNavigate } from "react-router-dom";
 import { CardAnimeList, Pagination } from "../../fragments";
 import { queryGetAllAnime } from "./queries";
-import { Container } from "./styles";
+import { Container, SimpleTabWrapper, TabActive, TabInactive } from "./styles";
 
 const HomeContainer = () => {
   const history = localStorage?.history
@@ -13,6 +13,10 @@ const HomeContainer = () => {
     page: history?.page ? +history?.page : 1,
     perPage: 10,
   });
+  const { data, loading } = useQuery(queryGetAllAnime, {
+    variables: pagination,
+  });
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (history) {
@@ -51,20 +55,25 @@ const HomeContainer = () => {
     handleHistory(pagination?.page, window?.scrollY);
   };
 
-  const { data, loading } = useQuery(queryGetAllAnime, {
-    variables: pagination,
-  });
+  const handleClickCollection = () => {
+    navigate("/collections");
+  };
 
   if (!localStorage?.collections) {
     localStorage?.setItem(
       "collections",
-      JSON.stringify([{ name: "favorites", list: [] }])
+      JSON.stringify([{ id: 1, name: "favorites", list: [] }])
     );
   }
 
   return (
     <Container>
-      <Font weight="semi-bold">Anime List</Font>
+      <SimpleTabWrapper>
+        <TabActive>Anime List</TabActive>
+        <TabInactive onClick={handleClickCollection}>
+          All collections
+        </TabInactive>
+      </SimpleTabWrapper>
       {loading && <div>LOADING...</div>}
       {!loading && (
         <React.Fragment>

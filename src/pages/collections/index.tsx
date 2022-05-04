@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Header } from "../../components";
+import CollectionsContainer from "../../containers/Collections/Collections";
 
 const Collections = () => {
   return (
     <>
       <Header>Ani-Collections</Header>
-      <Box>
-        <div>INI HALAMAN Collections YGY</div>
+      <Box header>
+        <CollectionsContainer />
       </Box>
     </>
   );

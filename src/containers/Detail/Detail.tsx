@@ -59,10 +59,10 @@ const DetailContainer = ({ id }: IDetailContainerProps) => {
 
   console.log(includedCollections, "INI INCL CL");
 
-  if (!localStorage?.collections && !loading) {
+  if (!localStorage?.collections) {
     localStorage?.setItem(
       "collections",
-      JSON.stringify([{ name: "favorites", list: [data?.Media] }])
+      JSON.stringify([{ id: 1, name: "favorites", list: [] }])
     );
   }
 
