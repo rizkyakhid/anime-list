@@ -17,7 +17,7 @@ const Card = ({ children, to, onClick }: ICardProps) => {
     border-radius: 8px;
     padding: 12px;
     text-decoration: none;
-    cursor: ${onClick ? "pointer" : "default"};
+    cursor: ${onClick ? "pointer" : to ? "pointer" : "default"};
   `;
   const CardWrapperDiv = styled.div`
     background: #ffffff;

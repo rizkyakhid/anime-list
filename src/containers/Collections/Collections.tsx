@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Button, Card, Font } from "../../components";
 import {
   ActionsWrapper,
-  ClickableDiv,
   Container,
   Image,
   NameWrapper,
@@ -31,14 +30,16 @@ const CollectionsContainer = () => {
     );
   };
 
-  const handleClickCollectionDetail = (name: string) => {
-    navigate(`/collections/detail?name=${name}`);
-  };
-
-  const handleDelete = (id: number) => {
+  const handleDelete = (e: any, id: number) => {
+    e.preventDefault();
     const res = collections?.filter((item: any) => id !== item?.id);
     localStorage?.setItem("collections", JSON.stringify(res));
     setCollections(res);
+  };
+
+  const handleEdit = (e: any, id: number) => {
+    e.preventDefault();
+    console.log(id);
   };
 
   if (!localStorage?.collections) {
@@ -60,27 +61,18 @@ const CollectionsContainer = () => {
       <Button>Add Collection</Button>
       {collections?.length !== 0 ? (
         collections?.map((item: any, id: number) => (
-          <Card key={id}>
+          <Card key={id} to={`/collections/detail?name=${item?.name}`}>
             <Container>
               {item?.list?.length !== 0 && item?.list[0]?.bannerImage && (
-                <Image
-                  onClick={() => handleClickCollectionDetail(item?.name)}
-                  src={item?.list[0]?.bannerImage}
-                  alt=""
-                  width={"100%"}
-                />
+                <Image src={item?.list[0]?.bannerImage} alt="" width={"100%"} />
               )}
               <NameWrapper>
-                <ClickableDiv
-                  onClick={() => handleClickCollectionDetail(item?.name)}
-                >
+                <div>
                   <Font weight="semi-bold">{item?.name?.toUpperCase()}</Font>
-                </ClickableDiv>
+                </div>
                 <ActionsWrapper>
-                  <ClickableDiv>edit</ClickableDiv>
-                  <ClickableDiv onClick={() => handleDelete(item?.id)}>
-                    del
-                  </ClickableDiv>
+                  <div onClick={(e: any) => handleEdit(e, item?.id)}>edit</div>
+                  <div onClick={(e: any) => handleDelete(e, item?.id)}>del</div>
                 </ActionsWrapper>
               </NameWrapper>
             </Container>

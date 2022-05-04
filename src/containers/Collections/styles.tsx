@@ -69,12 +69,9 @@ export const Image = styled.img`
   cursor: pointer;
 `;
 
-export const ClickableDiv = styled.div`
-  cursor: pointer;
-`;
-
 export const ActionsWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
+  text-decoration: none;
 `;
