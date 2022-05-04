@@ -49,12 +49,8 @@ const CollectionsContainer = () => {
             onClick={() => handleClickCollectionDetail(item?.name)}
           >
             <Container>
-              {item?.list?.length !== 0 && (
-                <img
-                  src={item?.list[0]?.bannerImage}
-                  alt="Banner Image"
-                  width={"100%"}
-                />
+              {item?.list?.length !== 0 && item?.list[0]?.bannerImage && (
+                <img src={item?.list[0]?.bannerImage} alt="" width={"100%"} />
               )}
               <Font weight="semi-bold">{item?.name?.toUpperCase()}</Font>
             </Container>
