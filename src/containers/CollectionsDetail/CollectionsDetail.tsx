@@ -34,7 +34,9 @@ const CollectionsDetailContainer = ({ name }: ICollectionsDetailContainer) => {
     const res = current?.list?.filter((item: any) => item?.id !== id);
     const coll = collections?.map((item: any) => {
       let result = {} as any;
-      if (item?.name?.toLowerCase() === name?.replace(/%20/g, " ")) {
+      if (
+        item?.name?.toLowerCase() === name?.toLowerCase()?.replace(/%20/g, " ")
+      ) {
         result = {
           id: item?.id,
           name: item?.name,

@@ -24,6 +24,7 @@ const CollectionsContainer = () => {
   const [otherState, setOtherState] = useState({
     confirmationDelete: false,
     modalNewCollection: false,
+    buttonValidation: true,
     selectedId: 0,
   });
   const [inputVal, setInputVal] = useState({
@@ -68,6 +69,12 @@ const CollectionsContainer = () => {
 
   const handleChangeAddCollection = (e: any) => {
     setInputVal({ ...inputVal, collectionName: e?.target?.value });
+    const validation =
+      collections?.filter(
+        (item: any) =>
+          item?.name?.toLowerCase() === e?.target?.value?.toLowerCase()
+      )?.length === 0;
+    setOtherState({ ...otherState, buttonValidation: validation });
   };
 
   const handleAddNewCollection = () => {
@@ -177,9 +184,14 @@ const CollectionsContainer = () => {
               value={inputVal?.collectionName}
               onChange={(e: any) => handleChangeAddCollection(e)}
               autoFocus
+              placeholder="Input new collection name"
             />
             <ButtonWrapper>
-              <Button width={"100%"} onClick={handleAddNewCollection}>
+              <Button
+                variant={otherState?.buttonValidation ? "primary" : "disabled"}
+                width={"100%"}
+                onClick={handleAddNewCollection}
+              >
                 ADD COLLECTION
               </Button>
             </ButtonWrapper>
