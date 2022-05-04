@@ -8,6 +8,10 @@ export const queryGetDetailById = gql`
         romaji
         native
       }
+      coverImage {
+        medium
+      }
+      meanScore
       bannerImage
       status
       duration

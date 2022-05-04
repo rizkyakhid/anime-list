@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Collections, Detail, Home } from "./pages";
+import { Collections, CollectionsDetail, Detail, Home } from "./pages";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
@@ -15,7 +15,7 @@ const App = () => (
       <Route index element={<Home />} />
       <Route path="/detail" element={<Detail />} />
       <Route path="/collections" element={<Collections />}></Route>
-      <Route path="/collections/detail" element={<div>HELLo</div>} />
+      <Route path="/collections/detail" element={<CollectionsDetail />} />
     </Routes>
   </BrowserRouter>
 );
