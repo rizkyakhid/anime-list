@@ -55,6 +55,13 @@ const HomeContainer = () => {
     variables: pagination,
   });
 
+  if (!localStorage?.collections) {
+    localStorage?.setItem(
+      "collections",
+      JSON.stringify([{ name: "favorites", list: [] }])
+    );
+  }
+
   return (
     <Container>
       <Font weight="semi-bold">Anime List</Font>

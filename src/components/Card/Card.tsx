@@ -17,6 +17,7 @@ const Card = ({ children, to, onClick }: ICardProps) => {
     border-radius: 8px;
     padding: 12px;
     text-decoration: none;
+    cursor: ${onClick ? "pointer" : "default"};
   `;
   const CardWrapperDiv = styled.div`
     background: #ffffff;
@@ -25,6 +26,7 @@ const Card = ({ children, to, onClick }: ICardProps) => {
     box-shadow: 1px 2px 15px rgba(5, 46, 88, 0.1);
     border-radius: 8px;
     padding: 12px;
+    cursor: ${onClick ? "pointer" : "default"};
   `;
   const handleClick = () => {
     onClick && onClick();

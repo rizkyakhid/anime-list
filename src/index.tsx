@@ -12,9 +12,10 @@ const client = new ApolloClient({
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route index element={<Home />} />
       <Route path="/detail" element={<Detail />} />
-      <Route path="/collections" element={<Collections />} />
+      <Route path="/collections" element={<Collections />}></Route>
+      <Route path="/collections/detail" element={<div>HELLo</div>} />
     </Routes>
   </BrowserRouter>
 );
