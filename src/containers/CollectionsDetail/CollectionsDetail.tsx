@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Font } from "../../components";
+import { Button, Font, Modal } from "../../components";
 import { CardAnimeList } from "../../fragments";
-import { Container } from "./styles";
+import { ButtonWrapper, Container, ModalWrapper } from "./styles";
 
 interface ICollectionsDetailContainer {
   name: string;
@@ -19,8 +19,16 @@ const CollectionsDetailContainer = ({ name }: ICollectionsDetailContainer) => {
         )
       : []
   );
+  const [otherState, setOtherState] = useState({
+    confirmationModal: false,
+    selectedId: 0,
+  });
 
   const handleDeleteAnime = (id: number) => {
+    setOtherState({ ...otherState, confirmationModal: true, selectedId: id });
+  };
+
+  const handleSubmitDeletion = (id: number) => {
     let curr = {} as any;
     const res = current?.list?.filter((item: any) => item?.id !== id);
     const coll = collections?.map((item: any) => {
@@ -38,7 +46,12 @@ const CollectionsDetailContainer = ({ name }: ICollectionsDetailContainer) => {
     });
     curr = { ...current, list: res };
     localStorage?.setItem("collections", JSON.stringify(coll));
+    setOtherState({ ...otherState, confirmationModal: false });
     setCurrent(curr);
+  };
+
+  const handleClickOutside = () => {
+    setOtherState({ ...otherState, confirmationModal: false });
   };
 
   return (
@@ -58,6 +71,34 @@ const CollectionsDetailContainer = ({ name }: ICollectionsDetailContainer) => {
           anime detail page!`}
         </Font>
       )}
+      <Modal
+        state={otherState?.confirmationModal}
+        onClickOutside={handleClickOutside}
+      >
+        <ModalWrapper>
+          <React.Fragment>
+            <Font weight="bold">Delete Anime from collection</Font>
+            <Font size="xs">
+              Are you sure to delete this anime from collection?
+            </Font>
+            <ButtonWrapper>
+              <Button
+                width={"47.5%"}
+                variant="secondary"
+                onClick={handleClickOutside}
+              >
+                NO
+              </Button>
+              <Button
+                width={"47.5%"}
+                onClick={() => handleSubmitDeletion(otherState?.selectedId)}
+              >
+                YES
+              </Button>
+            </ButtonWrapper>
+          </React.Fragment>
+        </ModalWrapper>
+      </Modal>
     </Container>
   );
 };
