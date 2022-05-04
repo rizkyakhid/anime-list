@@ -35,18 +35,6 @@ export const AddToCollectionLogo = styled.div`
   cursor: pointer;
 `;
 
-export const ModalContentWrapper = styled.div`
-  display: grid;
-  gap: 12px;
-  width: 100%;
-`;
-
-export const CardAddCollection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-`;
-
 export const InputCollection = styled.input`
   font-size: 12px;
   outline: none;

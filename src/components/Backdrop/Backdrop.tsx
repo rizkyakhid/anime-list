@@ -11,9 +11,8 @@ export default function Backdrop({ open = false, children }: IBackdropProps) {
     <>
       {open && (
         <>
-          <BackdropWrapper>
-            <Content>{children}</Content>
-          </BackdropWrapper>
+          <BackdropWrapper></BackdropWrapper>
+          <Content>{children}</Content>
         </>
       )}
     </>

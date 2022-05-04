@@ -1,15 +1,14 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Font, Modal } from "../../components";
+import { Font } from "../../components";
+import { ModalAddToCollections, ModalAllCollections } from "../../fragments";
 import { queryGetDetailById } from "./queries";
 import {
   AddToCollectionLogo,
-  CardAddCollection,
   ClickableFont,
   Container,
   InfoWrapper,
-  ModalContentWrapper,
   SectionWrapper,
   TitleWrapper,
 } from "./styles";
@@ -34,6 +33,7 @@ const DetailContainer = ({ id }: IDetailContainerProps) => {
   ];
   const [state, setState] = React.useState({
     collectionModal: false,
+    addToCollectionModal: false,
     inputNewCollection: false,
   });
   const collections = localStorage?.collections
@@ -41,27 +41,54 @@ const DetailContainer = ({ id }: IDetailContainerProps) => {
     : [];
   const navigate = useNavigate();
 
-  const handleClickAddToCollection = () => {
+  const handleSeeAllCollections = () => {
     setState({ ...state, collectionModal: true });
+  };
+
+  const handleClickAddToCollections = () => {
+    setState({ ...state, addToCollectionModal: true });
+  };
+
+  const handleRoute = (to: string) => {
+    navigate(to);
   };
 
   let includedCollections = [] as any;
 
+  const handleSubmitAddCollection = (array: any[]) => {
+    const localStorageInput =
+      collections?.length !== 0
+        ? collections?.map((item: any) => {
+            let res = {} as any;
+            if (array?.includes(item?.name)) {
+              res = {
+                id: item?.id,
+                name: item?.name,
+                list: [...item?.list, data?.Media],
+              };
+            } else {
+              res = item;
+            }
+            return res;
+          })
+        : [];
+    localStorage?.setItem("collections", JSON.stringify(localStorageInput));
+    setState({ ...state, addToCollectionModal: false });
+  };
+
   collections?.forEach((item: any) => {
-    const coll = [] as any;
-    item?.list?.forEach((anime: any) => {
-      if (anime?.id === data?.Media?.id) {
-        coll?.push(item?.name);
+    item?.list?.forEach((el: any) => {
+      if (el?.id === data?.Media?.id) {
+        includedCollections = [...includedCollections, item?.name];
       }
     });
-    includedCollections = coll;
   });
 
   if (!localStorage?.collections && !loading) {
     localStorage?.setItem(
       "collections",
       JSON.stringify([
-        { id: 1, name: "favorites", list: [data?.Media] },
+        { id: 1, name: "favorites", list: [] },
         { id: 2, name: "to be watched", list: [] },
       ])
     );
@@ -76,7 +103,9 @@ const DetailContainer = ({ id }: IDetailContainerProps) => {
             <InfoWrapper>
               <TitleWrapper>
                 <Font weight="semi-bold">{`${data?.Media?.title?.romaji} (${data?.Media?.title?.native})`}</Font>
-                <AddToCollectionLogo>+</AddToCollectionLogo>
+                <AddToCollectionLogo onClick={handleClickAddToCollections}>
+                  +
+                </AddToCollectionLogo>
               </TitleWrapper>
               {detailData?.map((item: any, id: number) => (
                 <div key={id}>
@@ -97,7 +126,7 @@ const DetailContainer = ({ id }: IDetailContainerProps) => {
                   <Font size="xs" weight="semi-bold">
                     Collections
                   </Font>
-                  <ClickableFont onClick={handleClickAddToCollection}>
+                  <ClickableFont onClick={handleSeeAllCollections}>
                     {"See all collections >"}
                   </ClickableFont>
                 </SectionWrapper>
@@ -105,40 +134,20 @@ const DetailContainer = ({ id }: IDetailContainerProps) => {
             </InfoWrapper>
           </>
         )}
-        <Modal
+        <ModalAllCollections
           state={state?.collectionModal}
-          width={"100%"}
+          data={includedCollections}
           onClickOutside={() => setState({ ...state, collectionModal: false })}
-        >
-          <ModalContentWrapper>
-            <Font size="sm" weight="semi-bold">
-              {`Collections that includes ${data?.Media?.title?.romaji}`}
-            </Font>
-            {includedCollections?.length !== 0 ? (
-              <Card onClick={() => console.log("test")}>
-                {includedCollections?.map((item: any, id: number) => (
-                  <CardAddCollection
-                    key={id}
-                    onClick={() => navigate(`/collections/detail?name=${item}`)}
-                  >
-                    <Font size="xs" weight="bold">
-                      {item?.toUpperCase()}
-                    </Font>
-                    <Font size="xs" color="#ff6388">
-                      {"Collection Detail >"}
-                    </Font>
-                  </CardAddCollection>
-                ))}
-              </Card>
-            ) : (
-              <div>
-                <Font size="xs">
-                  {`This anime hasn't been added to any collections. Please add it first by clicking button beside anime's name!`}
-                </Font>
-              </div>
-            )}
-          </ModalContentWrapper>
-        </Modal>
+          handleRoute={handleRoute}
+        />
+        <ModalAddToCollections
+          onSubmit={handleSubmitAddCollection}
+          data={collections}
+          state={state?.addToCollectionModal}
+          onClickOutside={() =>
+            setState({ ...state, addToCollectionModal: false })
+          }
+        />
       </Container>
     </>
   );

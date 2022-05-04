@@ -4,9 +4,16 @@ import React from "react";
 interface IButtonProps {
   children?: React.ReactNode;
   variant?: "primary" | "secondary" | "disabled";
+  width?: string | number;
+  onClick?: () => void;
 }
 
-const Button = ({ children, variant = "primary" }: IButtonProps) => {
+const Button = ({
+  children,
+  variant = "primary",
+  width,
+  onClick,
+}: IButtonProps) => {
   const ButtonWrapper = styled.button`
     outline: none;
     border: 1px solid
@@ -15,7 +22,7 @@ const Button = ({ children, variant = "primary" }: IButtonProps) => {
         : variant === "secondary"
         ? "#ff6388"
         : "#828282"};
-    padding: 12px 0;
+    padding: 12px;
     border-radius: 8px;
     background-color: ${variant === "primary" ? "#ff6388" : "#f8f8f8"};
     color: ${variant === "primary"
@@ -25,9 +32,20 @@ const Button = ({ children, variant = "primary" }: IButtonProps) => {
       : "#828282"};
     cursor: ${variant === "disabled" ? "default" : "pointer"};
     font-weight: 600;
+    width: ${width};
   `;
+  const handleClick = () => {
+    onClick && onClick();
+  };
 
-  return <ButtonWrapper>{children}</ButtonWrapper>;
+  return (
+    <ButtonWrapper
+      disabled={variant === "disabled" ? true : false}
+      onClick={handleClick}
+    >
+      {children}
+    </ButtonWrapper>
+  );
 };
 
 export default Button;

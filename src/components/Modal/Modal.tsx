@@ -14,11 +14,15 @@ interface IModalProps {
 const Modal = ({
   state = false,
   children,
-  width,
-  height,
+  // width,
+  // height,
   onClickOutside,
 }: IModalProps) => {
   const ModalWrapper = styled.div`
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1030;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,26 +30,25 @@ const Modal = ({
     padding: 16px;
     margin: 16px;
     border-radius: 12px;
-    width: ${width ? width : ""};
-    height: ${height ? height : ""};
   `;
-  const modalRef = useRef(document.createElement("div"));
+  const modalRef = useRef(null);
   const [isModalOpen, setModalOpen] = useState(false);
+
   useOnClickOutside(modalRef, () => {
     setModalOpen(false);
     if (onClickOutside) {
       onClickOutside();
     }
   });
+
   useEffect(() => {
     setModalOpen(state);
   }, [state]);
-  return isModalOpen ? (
+
+  return (
     <Backdrop open={isModalOpen}>
       {isModalOpen && <ModalWrapper ref={modalRef}>{children}</ModalWrapper>}
     </Backdrop>
-  ) : (
-    <></>
   );
 };
 
