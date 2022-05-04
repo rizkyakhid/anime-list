@@ -39,7 +39,7 @@ const ModalAddToCollections = ({
   };
 
   return (
-    <Modal state={state} onClickOutside={onClickOutside} width={"100%"}>
+    <Modal state={state} onClickOutside={onClickOutside}>
       <Container>
         {data?.length !== 0 ? (
           <React.Fragment>

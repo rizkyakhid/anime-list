@@ -7,17 +7,9 @@ interface IModalProps {
   state?: boolean;
   children?: React.ReactNode;
   onClickOutside?: () => void;
-  width?: string | number;
-  height?: string | number;
 }
 
-const Modal = ({
-  state = false,
-  children,
-  // width,
-  // height,
-  onClickOutside,
-}: IModalProps) => {
+const Modal = ({ state = false, children, onClickOutside }: IModalProps) => {
   const ModalWrapper = styled.div`
     position: fixed;
     left: 0;

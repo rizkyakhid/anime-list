@@ -16,7 +16,7 @@ const ModalAllCollections = ({
   handleRoute,
 }: IModalAllCollectionsProps) => {
   return (
-    <Modal state={state} width={"100%"} onClickOutside={onClickOutside}>
+    <Modal state={state} onClickOutside={onClickOutside}>
       <ModalContentWrapper>
         <Font size="sm" weight="semi-bold">
           {`Collections included`}
