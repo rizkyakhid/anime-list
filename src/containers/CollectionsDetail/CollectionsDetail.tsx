@@ -15,7 +15,8 @@ const CollectionsDetailContainer = ({ name }: ICollectionsDetailContainer) => {
     collections?.length !== 0
       ? collections?.find(
           (item: any) =>
-            item?.name?.toLowerCase() === name?.replace(/%20/g, " ")
+            item?.name?.toLowerCase() ===
+            name?.toLowerCase()?.replace(/%20/g, " ")
         )
       : []
   );
