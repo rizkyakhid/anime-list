@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Font } from "../../components";
-import { Container, SimpleTabWrapper, TabActive, TabInactive } from "./styles";
+import {
+  ActionsWrapper,
+  ClickableDiv,
+  Container,
+  Image,
+  NameWrapper,
+  SimpleTabWrapper,
+  TabActive,
+  TabInactive,
+} from "./styles";
 
 const CollectionsContainer = () => {
   const navigate = useNavigate();
+  const [collections, setCollections] = useState(
+    localStorage?.collections
+      ? JSON.parse(localStorage?.collections)
+      : ([] as any[])
+  );
 
   const handleClickAnimeList = () => {
     navigate("/");
@@ -21,9 +35,11 @@ const CollectionsContainer = () => {
     navigate(`/collections/detail?name=${name}`);
   };
 
-  const collections = localStorage?.collections
-    ? JSON.parse(localStorage?.collections)
-    : [];
+  const handleDelete = (id: number) => {
+    const res = collections?.filter((item: any) => id !== item?.id);
+    localStorage?.setItem("collections", JSON.stringify(res));
+    setCollections(res);
+  };
 
   if (!localStorage?.collections) {
     localStorage?.setItem(
@@ -44,15 +60,29 @@ const CollectionsContainer = () => {
       <Button>Add Collection</Button>
       {collections?.length !== 0 ? (
         collections?.map((item: any, id: number) => (
-          <Card
-            key={id}
-            onClick={() => handleClickCollectionDetail(item?.name)}
-          >
+          <Card key={id}>
             <Container>
               {item?.list?.length !== 0 && item?.list[0]?.bannerImage && (
-                <img src={item?.list[0]?.bannerImage} alt="" width={"100%"} />
+                <Image
+                  onClick={() => handleClickCollectionDetail(item?.name)}
+                  src={item?.list[0]?.bannerImage}
+                  alt=""
+                  width={"100%"}
+                />
               )}
-              <Font weight="semi-bold">{item?.name?.toUpperCase()}</Font>
+              <NameWrapper>
+                <ClickableDiv
+                  onClick={() => handleClickCollectionDetail(item?.name)}
+                >
+                  <Font weight="semi-bold">{item?.name?.toUpperCase()}</Font>
+                </ClickableDiv>
+                <ActionsWrapper>
+                  <ClickableDiv>edit</ClickableDiv>
+                  <ClickableDiv onClick={() => handleDelete(item?.id)}>
+                    del
+                  </ClickableDiv>
+                </ActionsWrapper>
+              </NameWrapper>
             </Container>
           </Card>
         ))
