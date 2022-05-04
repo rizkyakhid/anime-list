@@ -1,15 +1,9 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { Card, Font } from "../../components";
+import { Font } from "../../components";
+import { CardAnimeList, Pagination } from "../../fragments";
 import { queryGetAllAnime } from "./queries";
-import {
-  CardWrapper,
-  Container,
-  InfoWrapper,
-  Pagination,
-  PaginationDisabled,
-  PaginationWrapper,
-} from "./styles";
+import { Container } from "./styles";
 
 const HomeContainer = () => {
   const history = localStorage?.history
@@ -68,61 +62,9 @@ const HomeContainer = () => {
       {!loading && (
         <React.Fragment>
           {data?.Page?.media?.map((anime: any, id: number) => (
-            <Card
-              onClick={handleClickCard}
-              key={id}
-              to={`/detail?id=${anime?.id}`}
-            >
-              <CardWrapper>
-                <img
-                  height={139}
-                  width={100}
-                  src={anime?.coverImage?.medium}
-                  alt=""
-                />
-                <InfoWrapper>
-                  <Font weight="semi-bold">{anime?.title?.romaji}</Font>
-                  <Font size="xs">
-                    <span>{anime?.meanScore}</span> / 100
-                  </Font>
-                  <Font size="xs">{anime?.seasonYear}</Font>
-                  <Font size="xs">{`${anime?.episodes} Episode${
-                    anime?.episodes !== 1 ? "s" : ""
-                  }`}</Font>
-                </InfoWrapper>
-              </CardWrapper>
-            </Card>
+            <CardAnimeList data={anime} key={id} onClick={handleClickCard} />
           ))}
-          <PaginationWrapper>
-            {pagination?.page !== 1 && (
-              <>
-                <Pagination onClick={() => handlePagination("prev")}>
-                  <Font size="xs">Prev</Font>
-                </Pagination>
-                <PaginationDisabled>
-                  <Font size="xs" color="#828282">
-                    ...
-                  </Font>
-                </PaginationDisabled>
-              </>
-            )}
-            <Pagination onClick={() => handlePagination(pagination?.page)}>
-              <Font size="xs" weight="bold">
-                {String(pagination?.page)}
-              </Font>
-            </Pagination>
-            <Pagination onClick={() => handlePagination(pagination?.page + 1)}>
-              <Font size="xs">{String(pagination?.page + 1)}</Font>
-            </Pagination>
-            <PaginationDisabled>
-              <Font size="xs" color="#828282">
-                ...
-              </Font>
-            </PaginationDisabled>
-            <Pagination onClick={() => handlePagination("next")}>
-              <Font size="xs">Next</Font>
-            </Pagination>
-          </PaginationWrapper>
+          <Pagination value={pagination?.page} onClick={handlePagination} />
         </React.Fragment>
       )}
     </Container>

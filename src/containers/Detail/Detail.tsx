@@ -45,7 +45,7 @@ const DetailContainer = ({ id }: IDetailContainerProps) => {
                   <Font size="xs" weight="semi-bold">
                     {item?.field}
                   </Font>
-                  <Font size="xs" align="justify">
+                  <Font size="xs" align="justify" color="#4f4f4f">
                     {item?.value}
                   </Font>
                 </SectionWrapper>

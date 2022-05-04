@@ -30,10 +30,10 @@ export const TitleWrapper = styled.div`
 
 export const AddToCollectionLogo = styled.div`
   padding: 0 4px;
-  border: 1px solid #ff6388;
+  border: 2px solid #ff6388;
   color: #ff6388;
   border-radius: 8px;
-  font-weight: 500;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
