@@ -9,6 +9,8 @@ interface IModalInputsProps {
   handleOutside: () => void;
   handleChange: (e: any) => void;
   handleSubmit: () => void;
+  placeholder?: string;
+  submitButton?: string;
 }
 
 const ModalInputs = ({
@@ -18,6 +20,8 @@ const ModalInputs = ({
   handleOutside,
   handleChange,
   handleSubmit,
+  placeholder = "Input new collection name",
+  submitButton = "ADD COLLECTION",
 }: IModalInputsProps) => {
   return (
     <Modal state={state} onClickOutside={handleOutside}>
@@ -32,7 +36,7 @@ const ModalInputs = ({
             value={inputState}
             onChange={(e: any) => handleChange(e)}
             autoFocus
-            placeholder="Input new collection name"
+            placeholder={placeholder}
           />
           <ButtonWrapper>
             <Button
@@ -40,7 +44,7 @@ const ModalInputs = ({
               width={"100%"}
               onClick={handleSubmit}
             >
-              ADD COLLECTION
+              {submitButton}
             </Button>
           </ButtonWrapper>
         </React.Fragment>

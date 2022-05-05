@@ -228,6 +228,7 @@ const CollectionsContainer = () => {
         handleOutside={handleOutsideEditCollection}
         handleChange={handleChangeEditCollection}
         handleSubmit={handleEditCollection}
+        submitButton="CONFIRM CHANGE"
       />
     </Container>
   );
