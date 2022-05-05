@@ -229,6 +229,7 @@ const CollectionsContainer = () => {
         handleChange={handleChangeEditCollection}
         handleSubmit={handleEditCollection}
         submitButton="CONFIRM CHANGE"
+        title="Edit Collection Name"
       />
     </Container>
   );

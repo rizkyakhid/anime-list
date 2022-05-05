@@ -11,6 +11,7 @@ interface IModalInputsProps {
   handleSubmit: () => void;
   placeholder?: string;
   submitButton?: string;
+  title?: string;
 }
 
 const ModalInputs = ({
@@ -22,12 +23,13 @@ const ModalInputs = ({
   handleSubmit,
   placeholder = "Input new collection name",
   submitButton = "ADD COLLECTION",
+  title = "New Collection",
 }: IModalInputsProps) => {
   return (
     <Modal state={state} onClickOutside={handleOutside}>
       <ModalWrapper>
         <React.Fragment>
-          <Font weight="bold">New Collection</Font>
+          <Font weight="bold">{title}</Font>
           <Font size="xs" weight="semi-bold">
             Collection Name
           </Font>
