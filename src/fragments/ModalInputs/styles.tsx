@@ -17,8 +17,9 @@ export const InputCollection = styled.input`
   outline: none;
   border: 0;
   padding: 0px 0px 8px;
+  border-radius: 0px;
   border-bottom: 1px solid #828282;
   &:focus {
-    border-bottom: 1px solid #12B872;
+    border-bottom: 1px solid #12b872;
   }
 `;
