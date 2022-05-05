@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Font, Modal } from "../../components";
+import { ModalInputs } from "../../fragments";
 import {
   ActionsWrapper,
   ButtonWrapper,
   Container,
   Image,
-  InputCollection,
   ModalWrapper,
   NameWrapper,
   SimpleTabWrapper,
   TabActive,
   TabInactive,
 } from "./styles";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const CollectionsContainer = () => {
   const navigate = useNavigate();
@@ -24,11 +25,14 @@ const CollectionsContainer = () => {
   const [otherState, setOtherState] = useState({
     confirmationDelete: false,
     modalNewCollection: false,
+    modalEditCollection: false,
     buttonValidation: true,
     selectedId: 0,
+    selectedEditId: 0,
   });
   const [inputVal, setInputVal] = useState({
     collectionName: "",
+    editedName: "",
   });
 
   const handleClickAnimeList = () => {
@@ -54,10 +58,16 @@ const CollectionsContainer = () => {
     setOtherState({ ...otherState, confirmationDelete: false });
   };
 
-  // const handleEdit = (e: any, id: number) => {
-  //   e.preventDefault();
-  //   console.log(id);
-  // };
+  const handleEdit = (e: any, id: number) => {
+    e.preventDefault();
+    const res = collections?.filter((item: any) => id === item?.id);
+    setOtherState({
+      ...otherState,
+      modalEditCollection: true,
+      selectedEditId: id,
+    });
+    setInputVal({ ...inputVal, editedName: res[0]?.name });
+  };
 
   const handleOutsideConfirmation = () => {
     setOtherState({ ...otherState, confirmationDelete: false });
@@ -67,8 +77,22 @@ const CollectionsContainer = () => {
     setOtherState({ ...otherState, modalNewCollection: false });
   };
 
+  const handleOutsideEditCollection = () => {
+    setOtherState({ ...otherState, modalEditCollection: false });
+  };
+
   const handleChangeAddCollection = (e: any) => {
     setInputVal({ ...inputVal, collectionName: e?.target?.value });
+    const validation =
+      collections?.filter(
+        (item: any) =>
+          item?.name?.toLowerCase() === e?.target?.value?.toLowerCase()
+      )?.length === 0;
+    setOtherState({ ...otherState, buttonValidation: validation });
+  };
+
+  const handleChangeEditCollection = (e: any) => {
+    setInputVal({ ...inputVal, editedName: e?.target?.value });
     const validation =
       collections?.filter(
         (item: any) =>
@@ -93,6 +117,26 @@ const CollectionsContainer = () => {
     setOtherState({ ...otherState, modalNewCollection: false });
     setInputVal({ ...inputVal, collectionName: "" });
     setCollections(newCollection);
+  };
+
+  const handleEditCollection = () => {
+    const editedCollection = collections?.map((el: any) => {
+      let res: any;
+      if (el?.id === otherState?.selectedEditId) {
+        res = {
+          id: el?.id,
+          name: inputVal?.editedName,
+          list: el?.list,
+        };
+      } else {
+        res = el;
+      }
+      return res;
+    });
+    localStorage?.setItem("collections", JSON.stringify(editedCollection));
+    setOtherState({ ...otherState, modalEditCollection: false });
+    setInputVal({ ...inputVal, editedName: "" });
+    setCollections(editedCollection);
   };
 
   return (
@@ -125,11 +169,11 @@ const CollectionsContainer = () => {
                     <Font weight="semi-bold">{item?.name?.toUpperCase()}</Font>
                   </div>
                   <ActionsWrapper>
-                    {/* <div onClick={(e: any) => handleEdit(e, item?.id)}>
-                      edit
-                    </div> */}
+                    <div onClick={(e: any) => handleEdit(e, item?.id)}>
+                      <AiFillEdit color="#1078CA" />
+                    </div>
                     <div onClick={(e: any) => handleDelete(e, item?.id)}>
-                      del
+                      <AiFillDelete color="#E83939" />
                     </div>
                   </ActionsWrapper>
                 </NameWrapper>
@@ -169,35 +213,22 @@ const CollectionsContainer = () => {
           </React.Fragment>
         </ModalWrapper>
       </Modal>
-      <Modal
+      <ModalInputs
         state={otherState?.modalNewCollection}
-        onClickOutside={handleOutsideAddCollection}
-      >
-        <ModalWrapper>
-          <React.Fragment>
-            <Font weight="bold">New Collection</Font>
-            <Font size="xs" weight="semi-bold">
-              Collection Name
-            </Font>
-            <InputCollection
-              type="text"
-              value={inputVal?.collectionName}
-              onChange={(e: any) => handleChangeAddCollection(e)}
-              autoFocus
-              placeholder="Input new collection name"
-            />
-            <ButtonWrapper>
-              <Button
-                variant={otherState?.buttonValidation ? "primary" : "disabled"}
-                width={"100%"}
-                onClick={handleAddNewCollection}
-              >
-                ADD COLLECTION
-              </Button>
-            </ButtonWrapper>
-          </React.Fragment>
-        </ModalWrapper>
-      </Modal>
+        inputState={inputVal?.collectionName}
+        validation={otherState?.buttonValidation}
+        handleOutside={handleOutsideAddCollection}
+        handleChange={handleChangeAddCollection}
+        handleSubmit={handleAddNewCollection}
+      />
+      <ModalInputs
+        state={otherState?.modalEditCollection}
+        inputState={inputVal?.editedName}
+        validation={otherState?.buttonValidation}
+        handleOutside={handleOutsideEditCollection}
+        handleChange={handleChangeEditCollection}
+        handleSubmit={handleEditCollection}
+      />
     </Container>
   );
 };

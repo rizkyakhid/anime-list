@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { AiOutlineLeft } from "react-icons/ai";
 
 interface IHeaderProps {
   children?: string;
@@ -11,7 +12,7 @@ const Header = ({ children = "", backButton = false }: IHeaderProps) => {
     position: fixed;
     width: 100%;
     padding: 16px 0;
-    background-color: #ff6388;
+    background-color: #12b872;
     color: white;
     font-weight: 600;
     display: flex;
@@ -25,12 +26,10 @@ const Header = ({ children = "", backButton = false }: IHeaderProps) => {
     font-weight: 600;
     display: flex;
     justify-content: ${backButton ? "start" : "center"};
+    align-items: center;
     gap: 12px;
   `;
-  const BackButtonWrapper = styled.div`
-    cursor: ${backButton ? "pointer" : "default"};
-  `;
-  const handleBack = (e: React.MouseEvent<HTMLElement>) => {
+  const handleBack = (e: any) => {
     e?.preventDefault();
     window?.history?.back();
   };
@@ -38,11 +37,7 @@ const Header = ({ children = "", backButton = false }: IHeaderProps) => {
     <HeaderWrapper>
       <HeaderContentWrapper>
         {backButton && (
-          <BackButtonWrapper
-            onClick={(e: React.MouseEvent<HTMLElement>) => handleBack(e)}
-          >
-            {"<"}
-          </BackButtonWrapper>
+          <AiOutlineLeft color="#fff" onClick={(e: any) => handleBack(e)} />
         )}
         <div>{children}</div>
       </HeaderContentWrapper>

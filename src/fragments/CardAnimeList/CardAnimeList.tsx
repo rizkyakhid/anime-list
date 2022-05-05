@@ -1,6 +1,7 @@
 import { Card, Font } from "../../components";
 import React from "react";
 import { ActionButton, CardWrapper, InfoWrapper } from "./styles";
+import { AiFillDelete } from "react-icons/ai";
 
 interface ICardAnimeProps {
   data: any;
@@ -33,7 +34,9 @@ const CardAnimeList = ({ data, onClick, handleDelete }: ICardAnimeProps) => {
           </div>
           {handleDelete && (
             <ActionButton>
-              <div onClick={(e) => onClickDelete(e, data?.id)}>DEL</div>
+              <div onClick={(e) => onClickDelete(e, data?.id)}>
+                <AiFillDelete color="#E83939" />
+              </div>
             </ActionButton>
           )}
         </InfoWrapper>

@@ -5,13 +5,13 @@ import { Font } from "../../components";
 import { ModalAddToCollections, ModalAllCollections } from "../../fragments";
 import { queryGetDetailById } from "./queries";
 import {
-  AddToCollectionLogo,
   ClickableFont,
   Container,
   InfoWrapper,
   SectionWrapper,
   TitleWrapper,
 } from "./styles";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 interface IDetailContainerProps {
   id: number;
@@ -93,9 +93,13 @@ const DetailContainer = ({ id }: IDetailContainerProps) => {
             <InfoWrapper>
               <TitleWrapper>
                 <Font weight="semi-bold">{`${data?.Media?.title?.romaji} (${data?.Media?.title?.native})`}</Font>
-                <AddToCollectionLogo onClick={handleClickAddToCollections}>
-                  +
-                </AddToCollectionLogo>
+                <div>
+                  <AiOutlinePlusCircle
+                    onClick={handleClickAddToCollections}
+                    color={"#12B872"}
+                    size={"24px"}
+                  />
+                </div>
               </TitleWrapper>
               {detailData?.map((item: any, id: number) => (
                 <div key={id}>

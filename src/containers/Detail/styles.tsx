@@ -23,18 +23,6 @@ export const TitleWrapper = styled.div`
   gap: 12px;
 `;
 
-export const AddToCollectionLogo = styled.div`
-  padding: 0 4px;
-  border: 2px solid #ff6388;
-  color: #ff6388;
-  border-radius: 8px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
-
 export const InputCollection = styled.input`
   font-size: 12px;
   outline: none;
@@ -44,6 +32,6 @@ export const InputCollection = styled.input`
 
 export const ClickableFont = styled.div`
   font-size: 12px;
-  color: #ff6388;
+  color: #12b872;
   cursor: pointer;
 `;

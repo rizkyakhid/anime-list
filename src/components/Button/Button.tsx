@@ -20,15 +20,15 @@ const Button = ({
       ${variant === "primary"
         ? "#fff"
         : variant === "secondary"
-        ? "#ff6388"
+        ? "#12B872"
         : "#828282"};
     padding: 12px;
     border-radius: 8px;
-    background-color: ${variant === "primary" ? "#ff6388" : "#f8f8f8"};
+    background-color: ${variant === "primary" ? "#12B872" : "#f8f8f8"};
     color: ${variant === "primary"
       ? "#fff"
       : variant === "secondary"
-      ? "#ff6388"
+      ? "#12B872"
       : "#828282"};
     cursor: ${variant === "disabled" ? "default" : "pointer"};
     font-weight: 600;

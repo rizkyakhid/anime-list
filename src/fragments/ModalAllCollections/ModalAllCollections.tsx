@@ -27,10 +27,10 @@ const ModalAllCollections = ({
               <CardAddCollection
                 onClick={() => handleRoute(`/collections/detail?name=${item}`)}
               >
-                <Font size="xs" weight="bold">
+                <Font size="xs" weight="semi-bold">
                   {item?.toUpperCase()}
                 </Font>
-                <Font size="xs" color="#ff6388">
+                <Font size="xs" color="#12B872">
                   {"Collection Detail >"}
                 </Font>
               </CardAddCollection>
