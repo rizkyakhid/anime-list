@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Button, Font, Modal } from "../../components";
-import { CardAnimeList } from "../../fragments";
-import { ButtonWrapper, Container, ModalWrapper } from "./styles";
+import { CardAnimeList, ModalInputs } from "../../fragments";
+import { ButtonWrapper, Container, ModalWrapper, TitleWrapper } from "./styles";
+import { AiFillEdit } from "react-icons/ai";
 
 interface ICollectionsDetailContainer {
   name: string;
 }
 
 const CollectionsDetailContainer = ({ name }: ICollectionsDetailContainer) => {
-  const collections = localStorage?.collections
-    ? JSON.parse(localStorage?.collections)
-    : [];
+  const [collections, setCollections] = useState(
+    localStorage?.collections
+      ? JSON.parse(localStorage?.collections)
+      : ([] as any[])
+  );
   const [current, setCurrent] = useState(
     collections?.length !== 0
       ? collections?.find(
@@ -23,6 +26,12 @@ const CollectionsDetailContainer = ({ name }: ICollectionsDetailContainer) => {
   const [otherState, setOtherState] = useState({
     confirmationModal: false,
     selectedId: 0,
+    modalEditCollection: false,
+    buttonValidation: true,
+    selectedEditId: 0,
+  });
+  const [inputVal, setInputVal] = useState({
+    editedName: "",
   });
 
   const handleDeleteAnime = (id: number) => {
@@ -57,9 +66,64 @@ const CollectionsDetailContainer = ({ name }: ICollectionsDetailContainer) => {
     setOtherState({ ...otherState, confirmationModal: false });
   };
 
+  const handleEdit = (e: any, id: number) => {
+    e.preventDefault();
+    const res = collections?.filter((item: any) => id === item?.id);
+    setOtherState({
+      ...otherState,
+      modalEditCollection: true,
+      selectedEditId: id,
+    });
+    setInputVal({ ...inputVal, editedName: res[0]?.name });
+  };
+
+  const handleOutsideEditCollection = () => {
+    setOtherState({ ...otherState, modalEditCollection: false });
+  };
+
+  const handleChangeEditCollection = (e: any) => {
+    setInputVal({ ...inputVal, editedName: e?.target?.value });
+    const validation =
+      collections?.filter(
+        (item: any) =>
+          item?.name?.toLowerCase() === e?.target?.value?.toLowerCase()
+      )?.length === 0;
+    setOtherState({ ...otherState, buttonValidation: validation });
+  };
+
+  const handleEditCollection = () => {
+    let curr: any;
+    const editedCollection = collections?.map((el: any) => {
+      let res: any;
+      if (el?.id === otherState?.selectedEditId) {
+        res = {
+          id: el?.id,
+          name: inputVal?.editedName,
+          list: el?.list,
+        };
+        curr = res;
+      } else {
+        res = el;
+      }
+      return res;
+    });
+    localStorage?.setItem("collections", JSON.stringify(editedCollection));
+    setOtherState({ ...otherState, modalEditCollection: false });
+    setInputVal({ ...inputVal, editedName: "" });
+    setCollections(editedCollection);
+    setCurrent(curr);
+  };
+
   return (
     <Container>
-      <Font weight="semi-bold">{current?.name?.toUpperCase()}</Font>
+      <TitleWrapper>
+        <Font weight="semi-bold">{current?.name?.toUpperCase()}</Font>
+        <AiFillEdit
+          color="#1078CA"
+          cursor={"pointer"}
+          onClick={(e: any) => handleEdit(e, current?.id)}
+        />
+      </TitleWrapper>
       {current?.list?.length !== 0 ? (
         current?.list?.map((item: any, id: number) => (
           <CardAnimeList
@@ -102,6 +166,16 @@ const CollectionsDetailContainer = ({ name }: ICollectionsDetailContainer) => {
           </React.Fragment>
         </ModalWrapper>
       </Modal>
+      <ModalInputs
+        state={otherState?.modalEditCollection}
+        inputState={inputVal?.editedName}
+        validation={otherState?.buttonValidation}
+        handleOutside={handleOutsideEditCollection}
+        handleChange={handleChangeEditCollection}
+        handleSubmit={handleEditCollection}
+        submitButton="CONFIRM CHANGE"
+        title="Edit Collection Name"
+      />
     </Container>
   );
 };
